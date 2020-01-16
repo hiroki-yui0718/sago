@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
+using Photon.Pun;
 
 public class ShotBullet : MonoBehaviour
 {
     public GameObject bullet;
     public float shotSpeed;
     private int Intarval;
+    private new PhotonView photonView;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -14,16 +18,17 @@ public class ShotBullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
+    public async void Update()
     {
         if (Anim.Look == true && (Anim.x == 0 && Anim.z == 0))
         {
             Intarval += 5;
             if (Intarval % 60 == 0)
             {
-                GameObject bullets = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
+                GameObject bullets = PhotonNetwork.Instantiate("Bullet", transform.position, Quaternion.identity) as GameObject;
                 bullets.GetComponent<Rigidbody>().AddForce(transform.forward * shotSpeed);
-                Destroy(bullets, 0.4f);
+                await Task.Delay(1000);
+                PhotonNetwork.Destroy(bullets);
             }
         }
     }
