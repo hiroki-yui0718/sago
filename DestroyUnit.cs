@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 
 
 public class DestroyUnit : MonoBehaviourPunCallbacks
 {
+    public static int LeftScore = 0;
+    public static int RightScore = 0;
     [SerializeField] GameObject effect;
     private string Name;
     //private int HP;
@@ -50,13 +53,18 @@ public class DestroyUnit : MonoBehaviourPunCallbacks
         {
             //HP =  HP - HitBullet.bullet_PP;
             //0Debug.Log(Name +":"+ HP);
-            if(photonView.IsMine == false) { return; }
+            if(photonView.IsMine == false) { return; } //自分以外だったら
             photonView.RPC("HPdamage", RpcTarget.All, HitBullet.bullet_PP);
 
             if (HP <= 0)
             {
                 Debug.Log("Destroy:" + Name);
-                if (photonView.IsMine == false) { return; }
+                if (photonView.IsMine == false) {
+
+                    photonView.RPC("Score", RpcTarget.All, 100, 0);
+                    return;
+                }
+                photonView.RPC("Score", RpcTarget.All, 0, 100);
                 PhotonNetwork.Destroy(this.gameObject);
                 GameObject effect = PhotonNetwork.Instantiate("SmallExplosionEffect", transform.position,Quaternion.identity);
                 await Task.Delay(1000);
@@ -73,7 +81,15 @@ public class DestroyUnit : MonoBehaviourPunCallbacks
         Debug.Log(Name + ":" + HP);
         return;
     }
+    [PunRPC]
+    void Score(int score1,int score2)
+    {
+        Debug.Log("True2");
 
+        LeftScore += score1; //③変数+変化を指定
+        RightScore += score2;
+
+    }
     // Update is called once per frame
     void Update()
     {
