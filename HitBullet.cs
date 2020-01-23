@@ -14,7 +14,7 @@ public class HitBullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bullet_PP = 100;/*int.Parse(weponDataBase.weapon[1, 3]);*/
+        bullet_PP = int.Parse(weponDataBase.weapon[1, 3]);
     }
 
     

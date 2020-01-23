@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyJadg : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class EnemyJadg : MonoBehaviour
             if (other.tag == "Red")
             {
                 gameObject.tag = "red";
-            }
+}
             else if (other.tag == "Blue")
             {
                 gameObject.tag = "blue";
