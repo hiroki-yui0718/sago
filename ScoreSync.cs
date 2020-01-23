@@ -21,10 +21,7 @@ public class ScoreSync : MonoBehaviourPunCallbacks
     void Update()
     {
 
-        if (photonView.IsMine == false) {  }
-       
-
-            Debug.Log("True1");
+        if (photonView.IsMine == false) {}
             photonView.RPC(nameof(Score), RpcTarget.All, DestroyUnit.RedScore, DestroyUnit.BlueScore);
         
        
@@ -35,11 +32,9 @@ public class ScoreSync : MonoBehaviourPunCallbacks
     void Score(int score1,int score2)
     {
         RedScore += score1;　//③変数+変化を指定
-        Debug.Log("Red:" + RedScore);
         RedText.text = RedScore.ToString();
         DestroyUnit.RedScore = 0;
         BlueScore += score2;　//③変数+変化を指定
-        Debug.Log("Blue:"+BlueScore);
         BlueText.text = BlueScore.ToString();
         DestroyUnit.BlueScore = 0;
     }

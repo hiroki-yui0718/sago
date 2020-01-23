@@ -19,6 +19,7 @@ public class EnemyJadg : MonoBehaviour
             if (other.tag == "Red")
             {
                 gameObject.tag = "red";
+
 }
             else if (other.tag == "Blue")
             {
